@@ -1,0 +1,91 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation=" 
+        http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+ 
+	<mvc:annotation-driven />
+		<mvc:resources mapping="resources/**" location="/resources/"></mvc:resources>
+	<context:component-scan base-package="com.ahmedehab.patternmining.controller" />
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:prefix="/WEB-INF/jsp/" p:suffix=".jsp" />	
+	       
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3308/testdb" />
+		<property name="username" value="root" />
+		<property name="password" value="root" />
+	</bean>
+	
+	
+
+	<bean id="hibernate4AnnotatedSessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="annotatedClasses">
+			<list>
+				<value>com.ahmedehab.patternmining.domain.Consumption</value>
+				<value>com.ahmedehab.patternmining.domain.Device</value>
+				<value>com.ahmedehab.patternmining.domain.DevicePerConsumption</value>
+				<value>com.ahmedehab.patternmining.domain.Pattern</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect
+				</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="deviceDAO" class="com.ahmedehab.patternmining.dao.DeviceDAOImpl">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+	
+	<bean id="deviceService" class="com.ahmedehab.patternmining.service.DeviceServiceImpl">
+		<property name="deviceDAO" ref="deviceDAO" />
+	</bean>
+	
+	<bean id="patternDAO" class="com.ahmedehab.patternmining.dao.PatternDAOImpl">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+	
+	<bean id="patternService" class="com.ahmedehab.patternmining.service.PatternServiceImpl">
+		<property name="patternDAO" ref="patternDAO" />
+	</bean>
+	 
+    <bean id="patternMiningService" class="com.ahmedehab.patternmining.service.PatternMiningServiceImpl">
+		<property name="patternService" ref="patternService" />
+		<property name="deviceService" ref="deviceService" />
+	</bean>    
+	
+	<bean id="consumptionDAO" class="com.ahmedehab.patternmining.dao.ConsumptionDAOImpl">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+	
+	<bean id="consumptionService" class="com.ahmedehab.patternmining.service.ConsumptionServiceImpl">
+		<property name="consumptionDAO" ref="consumptionDAO" />
+	</bean>
+			
+	<bean id="patternMiningController" class="com.ahmedehab.patternmining.controller.PatternMiningController">
+		<property name="consumptionService" ref="consumptionService" />
+		<property name="patternMiningService" ref="patternMiningService" />
+	</bean>
+	
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+</beans>
