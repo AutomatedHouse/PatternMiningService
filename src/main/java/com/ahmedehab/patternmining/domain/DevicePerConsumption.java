@@ -8,15 +8,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="consumption")
+@Table(name="consumptions")
 public class DevicePerConsumption {
 	
 	@Id
-	@Column(name="idc")
+	@Column(name="id")
 	private Integer id;
 	
 	@ManyToOne
-	@JoinColumn(name="deviceid")
+	@JoinColumn(name="device_id")
 	private Device device;
 
 	public Integer getId() {

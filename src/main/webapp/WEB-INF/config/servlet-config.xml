@@ -18,21 +18,21 @@
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
 		p:prefix="/WEB-INF/jsp/" p:suffix=".jsp" />	
 	       
-<!--     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" -->
-<!-- 		destroy-method="close"> -->
-<!-- 		<property name="driverClassName" value="com.mysql.jdbc.Driver" /> -->
-<!-- 		<property name="url" value="jdbc:mysql://localhost:3308/testdb" /> -->
-<!-- 		<property name="username" value="root" /> -->
-<!-- 		<property name="password" value="root" /> -->
-<!-- 	</bean> -->
-	
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://us-cdbr-iron-east-03.cleardb.net/ad_f3ea85a4b99b39c" />
-		<property name="username" value="bf1d72fd21452d" />
-		<property name="password" value="a3868cd7" />
+		<property name="url" value="jdbc:mysql://localhost:3308/testdb" />
+		<property name="username" value="root" />
+		<property name="password" value="root" />
 	</bean>
+	
+<!-- 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" -->
+<!-- 		destroy-method="close"> -->
+<!-- 		<property name="driverClassName" value="com.mysql.jdbc.Driver" /> -->
+<!-- 		<property name="url" value="jdbc:mysql://us-cdbr-iron-east-03.cleardb.net/ad_f3ea85a4b99b39c" /> -->
+<!-- 		<property name="username" value="bf1d72fd21452d" /> -->
+<!-- 		<property name="password" value="a3868cd7" /> -->
+<!-- 	</bean> -->
 
 	<bean id="hibernate4AnnotatedSessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">

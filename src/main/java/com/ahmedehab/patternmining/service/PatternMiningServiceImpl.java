@@ -100,7 +100,7 @@ public class PatternMiningServiceImpl implements PatternMiningService {
 			}
 			pattern.setEvents(eventDevices);
 			//Set support and confidence
-			pattern.setSupport(rule.getAbsoluteSupport());
+			pattern.setSupport(rule.getRelativeSupport(databaseSize));
 			pattern.setConfidence(rule.getConfidence());
 			//Add the new pattern to the list of patterns
 			patterns.add(pattern);

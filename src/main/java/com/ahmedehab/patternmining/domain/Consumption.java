@@ -18,16 +18,16 @@ import javax.persistence.Table;
 public class Consumption {
 
 	@Id
-	@Column(name="idt")
+	@Column(name="id")
 	private Integer id;
 
 	@Column(name="timestamp")
 	private Timestamp timestamp;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name="consumption_hour",joinColumns=@JoinColumn(name="idt")
-			,inverseJoinColumns=@JoinColumn(name="idc"))
-	@OrderBy(value="deviceid asc")
+	@JoinTable(name="consumption_timestamp",joinColumns=@JoinColumn(name="timestamp_id")
+			,inverseJoinColumns=@JoinColumn(name="consumption_id"))
+	@OrderBy(value="id asc")
 	private List<DevicePerConsumption> deviceSequence;
 
 	public Integer getId() {

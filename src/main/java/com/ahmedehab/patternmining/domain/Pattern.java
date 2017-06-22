@@ -2,8 +2,6 @@ package com.ahmedehab.patternmining.domain;
 
 import java.util.List;
 
-import javax.persistence.AssociationOverride;
-import javax.persistence.AssociationOverrides;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,30 +15,27 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="pattern")
-@AssociationOverrides({
-	@AssociationOverride(name = "patternId.actionid",
-		joinColumns = @JoinColumn(name = "actionid")),
-	@AssociationOverride(name = "patternId.eventid",
-		joinColumns = @JoinColumn(name = "eventid")) })
+@Table(name="paterns")
+
 public class Pattern {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="patternid")
+	@Column(name="id")
 	private Integer id;
 	
 	@ManyToOne(cascade=CascadeType.MERGE)
-	@JoinColumn(name="actionid")
+	@JoinColumn(name="device_id")
 	private Device action;
 	
+	//Previously: name="event"
 	@OneToMany(cascade=CascadeType.MERGE)  
-    @JoinTable(name="event", joinColumns=@JoinColumn(name="patternid"), 
-    	inverseJoinColumns=@JoinColumn(name="device"))  
+    @JoinTable(name="device_pattern", joinColumns=@JoinColumn(name="pattern_id"), 
+    	inverseJoinColumns=@JoinColumn(name="device_id"))  
 	private List<Device> events;
 	
 	@Column(name="support")
-	private Integer support = 0;
+	private double support = 0;
 	
 	@Column(name="confidence")
 	private double confidence = 0.0;
@@ -68,12 +63,12 @@ public class Pattern {
 	public void setEvents(List<Device> events) {
 		this.events = events;
 	}
-
-	public Integer getSupport() {
+	
+	public double getSupport() {
 		return support;
 	}
 
-	public void setSupport(Integer support) {
+	public void setSupport(double support) {
 		this.support = support;
 	}
 
