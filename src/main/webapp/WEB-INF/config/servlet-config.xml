@@ -18,14 +18,15 @@
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
 		p:prefix="/WEB-INF/jsp/" p:suffix=".jsp" />	
 	       
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-		destroy-method="close">
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3308/testdb" />
-		<property name="username" value="root" />
-		<property name="password" value="root" />
-	</bean>
+<!--     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" -->
+<!-- 		destroy-method="close"> -->
+<!-- 		<property name="driverClassName" value="com.mysql.jdbc.Driver" /> -->
+<!-- 		<property name="url" value="jdbc:mysql://localhost:3308/testdb" /> -->
+<!-- 		<property name="username" value="root" /> -->
+<!-- 		<property name="password" value="root" /> -->
+<!-- 	</bean> -->
 	
+<!-- 	Old ClearDB database, don't use unless you changed the tables inside -->
 <!-- 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" -->
 <!-- 		destroy-method="close"> -->
 <!-- 		<property name="driverClassName" value="com.mysql.jdbc.Driver" /> -->
@@ -33,6 +34,14 @@
 <!-- 		<property name="username" value="bf1d72fd21452d" /> -->
 <!-- 		<property name="password" value="a3868cd7" /> -->
 <!-- 	</bean> -->
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://eu-cdbr-sl-lhr-01.cleardb.net/ibmx_93f6261380dab6a" />
+		<property name="username" value="ba33cd7a0c5c5a" />
+		<property name="password" value="849d545e" />
+	</bean>
 
 	<bean id="hibernate4AnnotatedSessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
